@@ -93,11 +93,11 @@ namespace EPLAN_Toggle_Units_Scripts
                 return;
             }
 
-            //Use a Command Line Interpreter to call the Action
+            //Use a Command Line Interpreter to call the XGedSetGridsizeAction Action that sets the active
+            //grid size (A to E). I decided to set it to "D", but you can change to whatever you like.
             CommandLineInterpreter CLI = new CommandLineInterpreter();
-
             ActionCallingContext ctx = new ActionCallingContext();
-            ctx.AddParameter("Id", "4");
+            ctx.AddParameter("Id", "4"); // 4 == "D"
             CLI.Execute("XGedSetGridsizeAction", ctx);
 
         }
