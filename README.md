@@ -7,13 +7,16 @@ It is now imperative to verify which default units were selected when installing
 
 This scripts takes care of verifying what default units were selected during install, and use the correct settings name to toggle between Inch and mm.
 
-## Run the script
-This script is defined as what I call a "Run" script, because you have to go to
+## Load the script
+This script is defined as what I call a "Load" script, because you have to go to
 
-*Utilities > Scripts > Run...*
+*Utilities > Scripts > Load*
 
-and then go to the folder where the script is located, select the script, and click OK to run it.
+and then go to the folder where the script is located, select the script, and click OK to load it in EPLAN's environment.
 
-A Run script is does not remain in memory. It executes, and is unloaded at once.
+A Load script remains in memory. It executes, every time you call its associated menu point.
 
-Of course, it could be modified to be loaded permanently so that you call it from a menu or a toolbar button.
+Instead of a menu point, one could also call the script from a Toolbar Button. As long as the script is loaded in memory, the Action
+it defines remains available to the user. In this case, the "ToggleUnitsAction".
+
+In EPLAN, a great many deal of things we do when we interact with it, is actuall call Actions, either built-in Actions defined by the plattform, or user defined Actions like we're doing now.
