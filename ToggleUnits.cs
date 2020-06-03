@@ -39,24 +39,37 @@ namespace EPLAN_Toggle_Units_Scripts
 
     class ToggleUnits
     {
+		
+		[DeclareMenuAction]
+		public void MenuFunction()
+		{
+			Eplan.EplApi.Gui.Menu oMenu = new Eplan.EplApi.Gui.Menu();
+			oMenu.AddMenuItem("Toggle GED Units Inch/mm", "ToggleUnitsAction");
+		}
+		
         //Script entry point
-        [Start]
-        public void Run()
+        [DeclareAction]
+        public void ToggleUnitsAction()
         {
             Settings set = new Settings();
 
-            //Get the installation type.
-            //Will be either "mm" or "inch"
+            //Get the installation type, which is actually the unit system name that we defined as the default.
+            //As far as I know, it will be either "mm" or "inch".
             string InstallTypeSettingName = "STATION.SYSTEM.MasterdataLanguage";
             string InstallType = set.GetStringSetting(InstallTypeSettingName, 0); ;
 
+            //The idea is fairly straightforward. If we detect a metric installation, we must use specific Setting names. Conversely,
+            //if we detect an Inch installation, we must then use the inch specific Setting names.
+            
             if(string.IsNullOrEmpty(InstallType) || (InstallType != "mm" && InstallType != "inch"))
             {
+                //If the InstallType is neither "mm" or "inch", then display an error dialog, and exit back to EPLAN.
                 MessageBox.Show(string.Format("Can't read the {0} setting: ", InstallTypeSettingName));
                 return;
 
             }
 
+            //Now that we do have an InstallType name, it will be used to concatenate Text to obtain the BaseUnitSettingType
             string BaseUnitSettingName = string.Format("USER.EnfMVC.DisplayUnitIDs.{0}.BaseUnit", InstallType);
             string DefaultGridSizeSettingName = string.Format("USER.GedViewer.{0}.DefaultGridSize", InstallType);
 
@@ -93,11 +106,11 @@ namespace EPLAN_Toggle_Units_Scripts
                 return;
             }
 
-            //Use a Command Line Interpreter to call the XGedSetGridsizeAction Action that sets the active
-            //grid size (A to E). I decided to set it to "D", but you can change to whatever you like.
+            //Use a Command Line Interpreter to call the Action
             CommandLineInterpreter CLI = new CommandLineInterpreter();
+
             ActionCallingContext ctx = new ActionCallingContext();
-            ctx.AddParameter("Id", "4"); // 4 == "D"
+            ctx.AddParameter("Id", "4");
             CLI.Execute("XGedSetGridsizeAction", ctx);
 
         }
