@@ -40,7 +40,7 @@ namespace EPLAN_Toggle_Units_Scripts
     class ToggleUnits
     {
 		
-		[DeclareMenuAction]
+		[DeclareMenu]
 		public void MenuFunction()
 		{
 			Eplan.EplApi.Gui.Menu oMenu = new Eplan.EplApi.Gui.Menu();
@@ -48,7 +48,7 @@ namespace EPLAN_Toggle_Units_Scripts
 		}
 		
         //Script entry point
-        [DeclareAction]
+        [DeclareAction("ToggleUnitsAction")]
         public void ToggleUnitsAction()
         {
             Settings set = new Settings();
